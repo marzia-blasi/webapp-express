@@ -4,4 +4,9 @@ const express = require("express");
 //Oggetto router
 const router = express.Router();
 
-router.get("/");
+//importare controller
+const movieControllers = require("../controllers/movieController");
+
+router.get("/", movieControllers.index);
+
+module.exports = router;
