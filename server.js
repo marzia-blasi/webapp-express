@@ -4,6 +4,10 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT;
 
+//CORS
+const cors = require("cors");
+app.use(cors());
+
 //static asset
 app.use(express.static("img"));
 
