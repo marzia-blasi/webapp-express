@@ -37,7 +37,18 @@ const show = (req, res) => {
       });
     }
 
-    res.json(results[0]);
+    const movie = results[0];
+    const reviewsSql = "SELECT * FROM reviews WHERE movie_id = ?";
+    connection.query(reviewsSql, [id], (err, reviewsResults) => {
+      if (err)
+        return res.status(500).json({
+          error: true,
+          message: err.message,
+        });
+
+      movie.reviews = reviewsResults;
+      res.json(movie);
+    });
   });
 };
 
