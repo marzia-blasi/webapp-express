@@ -1,5 +1,6 @@
 //importiamo i movie dal connection con il db
 
+const { text } = require("express");
 const connection = require("../db/connection.js");
 
 // Index
@@ -52,5 +53,34 @@ const show = (req, res) => {
   });
 };
 
+//Store
+const store = (req, res) => {
+  const movieId = parseInt(req.params.id);
+  const { text, name, vote } = req.body;
+
+  if (!text || !name || !vote) {
+    return res.status(400).json({
+      error: true,
+      message: "All fields are required",
+    });
+  }
+
+  const sql =
+    "INSERT INTO reviews (movie_id, text, name, vote ) VALUES (?, ?, ? , ?)";
+  connection.query(sql, [movieId, text, name, vote], (err, results) => {
+    if (err)
+      return res.status(500).json({
+        error: true,
+        message: err.message,
+      });
+
+    res.status(201).json({
+      error: false,
+      message: "Review aggiunta!",
+      reviewId: results.insertId,
+    });
+  });
+};
+
 // destrutturo così perchè poi saranno molti moduli da esportare
-module.exports = { index, show };
+module.exports = { index, show, store };
