@@ -38,6 +38,7 @@ const show = (req, res) => {
     }
 
     const movie = results[0];
+
     const reviewsSql = "SELECT * FROM reviews WHERE movie_id = ?";
     connection.query(reviewsSql, [id], (err, reviewsResults) => {
       if (err)
@@ -56,6 +57,7 @@ const show = (req, res) => {
 function storeReview(req, res) {
   const movieId = parseInt(req.params.id);
   const { text, name, vote } = req.body;
+  console.log(req.body);
 
   const sql =
     "INSERT INTO reviews (movie_id, name, vote, text ) VALUES (?, ?, ? , ?)";

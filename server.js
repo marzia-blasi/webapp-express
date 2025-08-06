@@ -6,6 +6,7 @@ const PORT = process.env.PORT;
 
 //CORS
 const cors = require("cors");
+app.use(express.json());
 app.use(cors());
 
 //static asset
